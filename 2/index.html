@@ -34,12 +34,13 @@
         </div>
     </div>
 <script>
+    var check_data;
     var result = "";
     let requestURL = 'ezquiz.json'; 
     let request = new XMLHttpRequest(); 
     request.onreadystatechange = function () { 
     if (request.readyState == 4 && request.status == 200) {             
-        dataReportStatus(JSON.parse(request.responseText));          
+        dataReportStatus(JSON.parse(request.responseText));        
     } }; 
     request.open("GET", requestURL, true); 
     request.send(); 
@@ -52,7 +53,7 @@
             result += `<div class="card-body">`;
             result += `<h5>${data.tracks.items[i].album.name}</h5><p>${data.tracks.items[i].album.artists[0].name}</p><p>${data.tracks.items[i].album.release_date}</p><p>${data.tracks.items[i].album.available_markets.length} countires</p></div></div></div>`
             }
-        var check_data = data;
+        check_data = data;
         document.getElementById('music-list').innerHTML = result;
     }
     
@@ -62,26 +63,26 @@
         var text_want = document.getElementById('sreach').value;
         var result = '';
         for (let num = 0; num < check_data.tracks.items.length; num++) {
-            if (text_want == check_data.tracks.items[i].album.name) {
+            if (text_want == check_data.tracks.items[num].album.name) {
                 check = 1;
                 result += `<div class="col-4 mt-4">`;
                 result += `<div class="card">`;
-                result += `<img src="${data.tracks.items[i].album.images[0].url}" class="card-img-top">`;
+                result += `<img src="${check_data.tracks.items[num].album.images[0].url}" class="card-img-top">`;
                 result += `<div class="card-body">`;
-                result += `<h5>${data.tracks.items[i].album.name}</h5><p>${data.tracks.items[i].album.artists[0].name}</p><p>${data.tracks.items[i].album.release_date}</p><p>${data.tracks.items[i].album.available_markets.length} countires</p></div></div></div>`
-            } else if (text_want == check_data.tracks.items[i].album.artists[0].name) {
+                result += `<h5>${check_data.tracks.items[num].album.name}</h5><p>${check_data.tracks.items[num].album.artists[0].name}</p><p>${check_data.tracks.items[num].album.release_date}</p><p>${check_data.tracks.items[num].album.available_markets.length} countires</p></div></div></div>`
+            } else if (text_want == check_data.tracks.items[num].album.artists[0].name) {
                 check = 1;
                 result += `<div class="col-4 mt-4">`;
                 result += `<div class="card">`;
-                result += `<img src="${data.tracks.items[i].album.images[0].url}" class="card-img-top">`;
+                result += `<img src="${check_data.tracks.items[i].album.images[0].url}" class="card-img-top">`;
                 result += `<div class="card-body">`;
-                result += `<h5>${data.tracks.items[i].album.name}</h5><p>${data.tracks.items[i].album.artists[0].name}</p><p>${data.tracks.items[i].album.release_date}</p><p>${data.tracks.items[i].album.available_markets.length} countires</p></div></div></div>`
+                result += `<h5>${check_data.tracks.items[num].album.name}</h5><p>${check_data.tracks.items[num].album.artists[0].name}</p><p>${check_data.tracks.items[num].album.release_date}</p><p>${check_data.tracks.items[num].album.available_markets.length} countires</p></div></div></div>`
             }
         }
         if (check == 1) {
             document.getElementById('music-list').innerHTML = result
         } else {
-            document.getElementById('music-list').innerHTML = 'Not Found';
+            document.getElementById('music-list').innerHTML = '<p>Not Found</p>';
         }
     }
 </script>
